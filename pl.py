@@ -85,7 +85,12 @@ class MyBot:
     def login(self):
         number = input('- enter phone = ')
         self.cli.send_code_request(number)
-        self.cli.sign_in(number, input('- code = '))
+        code = input('- code = ')
+        try:
+            self.cli.sign_in(number, code)
+        except errors.rpcerrorlist.SessionPasswordNeededError:
+            password = input('enter pass = ')
+            self.cli.sign_in(password=password)
     def show_chats(self):
         for dialog in self.cli.iter_dialogs():
             print(f'{Color.GREEN}[ {Color.BLUE}+ {Color.GREEN}]{Color.YELLOW}',dialog.name, f'{Color.GRAY} = {Color.MAGENTA}', dialog.id,f';{Color.RESET}')
@@ -102,6 +107,28 @@ def getint(msg: str, er: str = '- enter an integer !'):
     except ValueError:
         print(er)
         return getint(msg,er)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+class Color:
+    RESET = '\x1b[0m'
+    RED = '\x1b[91m'
+    GRAY = '\x1b[90m'
+    MAGENTA = '\x1b[35m'
+    CYAN = '\x1b[96m'
+    YELLOW = '\x1b[93m'
+    BLUE = '\x1b[94m'
+    BLACK = '\x1b[30m'
+    GREEN = '\x1b[92m'
+    LIGHT_GRAY = '\x1b[37m'
+    DARK_GRAY = '\x1b[90m'
+    LIGHT_RED = '\x1b[91m'
+    LIGHT_GREEN = '\x1b[92m'
+    LIGHT_YELLOW = '\x1b[93m'
+    LIGHT_BLUE = '\x1b[94m'
+    LIGHT_MAGENTA = '\x1b[95m'
+    LIGHT_CYAN = '\x1b[96m'
+    #
+    BACKGROUND_RED = '\x1b[41m'
+    BACKGROUND_GRAY = '\x1b[100m'
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 def checkchat(chat: str):
     if chat[0] == '-' or chat.isdigit():
