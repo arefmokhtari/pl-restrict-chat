@@ -2,7 +2,7 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 from telethon.sync import TelegramClient,errors, connection
 from os import remove as osremove
-from Color import Color
+#from Color import Color
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 class MyBot:
     def __init__(self,name,api_id,api_hash):
