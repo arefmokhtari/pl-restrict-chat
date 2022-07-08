@@ -1,8 +1,7 @@
 #                   [   Plague Dr.  ]
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-from telethon.sync import TelegramClient,errors, connection
+from telethon.sync import TelegramClient,errors, types
 from os import remove as osremove
-#from Color import Color
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 class MyBot:
     def __init__(self,name,api_id,api_hash):
@@ -70,12 +69,12 @@ class MyBot:
         print(Color.DARK_GRAY,'\n\n----    wait!    ----\n',Color.RESET)
         try:
             for msg in self.cli.iter_messages(mainchat,end):
-                if msg.media:
+                if msg.media and type(msg.media) != types.MessageMediaWebPage:
                     self.cli.send_file(anychat,msg.media,caption=msg.raw_text)
                 else:
                     self.cli.send_message(anychat,msg.raw_text)
-        except ValueError:
-            print(f'{Color.RED}- chat not found !{Color.RESET}')
+        except ValueError as er:
+            print(f'{Color.RED}- Value Error !{Color.RESET}\n- '+er)
         except errors.rpcerrorlist.ChatForwardsRestrictedError:
             print(f'{Color.RED}- chat is restricted ! {Color.GRAY}please use \'Send from restrict chat to any chat\' !{Color.RESET}')
     def connect(self):
