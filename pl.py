@@ -74,7 +74,7 @@ class MyBot:
                 else:
                     self.cli.send_message(anychat,msg.raw_text)
         except ValueError as er:
-            print(f'{Color.RED}- Value Error !{Color.RESET}\n- '+er)
+            print(f'{Color.RED}- Value Error !{Color.RESET}\n- {er}')
         except errors.rpcerrorlist.ChatForwardsRestrictedError:
             print(f'{Color.RED}- chat is restricted ! {Color.GRAY}please use \'Send from restrict chat to any chat\' !{Color.RESET}')
     def connect(self):
