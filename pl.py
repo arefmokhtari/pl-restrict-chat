@@ -34,11 +34,13 @@ class MyBot:
         restrictchat = checkchat(input('- enter restrict chat = '))
         anychat = checkchat(input('- enter any chat 2 send = '))
         print(f'{Color.RED}----    if you enter \'0\', it means \'None\'    ----',Color.RESET)
-        end = getint('- enter end msg = ')
+        start = getint(f'{Color.GRAY}-  start ={Color.RESET} ')
+        start = start + 1 if start > 0 else 0
+        end = getint(f'{Color.GRAY}- enter end msg ={Color.RESET} ')
         end = None if end == 0 else end
         print(Color.DARK_GRAY,'\n\n----    wait!    ----\n',Color.RESET)
         try:
-            for msg in self.cli.iter_messages(restrictchat,end):
+            for msg in self.cli.iter_messages(restrictchat, end, offset_id = start):
                 if msg.media:
                     media = self.cli.download_media(msg.media)
                     self.cli.send_file(anychat,media,caption=msg.raw_text)
@@ -50,11 +52,13 @@ class MyBot:
         mainchat = checkchat(input('- enter main chat = '))
         anychat = checkchat(input('- enter any chat 2 send = '))
         print(f'{Color.RED}----    if you enter \'0\', it means \'None\'    ----',Color.RESET)
-        end = getint('- enter end msg = ')
+        start = getint(f'{Color.GRAY}-  start ={Color.RESET} ')
+        start = start + 1 if start > 0 else 0
+        end = getint(f'{Color.GRAY}- enter end msg ={Color.RESET} ')
         end = None if end == 0 else end
         print(Color.DARK_GRAY,'\n\n----    wait!    ----\n',Color.RESET)
         try:
-            for msg in self.cli.iter_messages(mainchat,end):
+            for msg in self.cli.iter_messages(mainchat, end, offset_id = start):
                 msg.forward_to(anychat)
         except ValueError:
             print(f'{Color.RED}- chat not found !{Color.RESET}')
@@ -64,11 +68,13 @@ class MyBot:
         mainchat = checkchat(input('- enter main chat = '))
         anychat = checkchat(input('- enter any chat 2 send = '))
         print(f'{Color.RED}----    if you enter \'0\', it means \'None\'    ----',Color.RESET)
-        end = getint('- enter end msg = ')
+        start = getint(f'{Color.GRAY}-  start ={Color.RESET} ')
+        start = start + 1 if start > 0 else 0
+        end = getint(f'{Color.GRAY}- enter end msg ={Color.RESET} ')
         end = None if end == 0 else end
         print(Color.DARK_GRAY,'\n\n----    wait!    ----\n',Color.RESET)
         try:
-            for msg in self.cli.iter_messages(mainchat,end):
+            for msg in self.cli.iter_messages(mainchat, end, offset_id = start):
                 if msg.media and type(msg.media) != types.MessageMediaWebPage:
                     self.cli.send_file(anychat,msg.media,caption=msg.raw_text)
                 else:
