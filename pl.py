@@ -41,11 +41,12 @@ class MyBot:
         print(Color.DARK_GRAY,'\n\n----    wait!    ----\n',Color.RESET)
         try:
             for msg in self.cli.iter_messages(restrictchat, end, offset_id = start):
-                if msg.media:
-                    media = self.cli.download_media(msg.media)
-                    self.cli.send_file(anychat,media,caption=msg.raw_text)
-                else:
-                    self.cli.send_message(anychat,msg.raw_text)
+                if type(msg) != types.MessageService:
+                    if msg.media:
+                        media = self.cli.download_media(msg.media)
+                        self.cli.send_file(anychat,media,caption=msg.raw_text)
+                    else:
+                        self.cli.send_message(anychat,msg.raw_text)
         except ValueError:
             print(f'{Color.RED}- chat not found !',Color.RESET)
     def forwaed_msg(self):
@@ -59,7 +60,8 @@ class MyBot:
         print(Color.DARK_GRAY,'\n\n----    wait!    ----\n',Color.RESET)
         try:
             for msg in self.cli.iter_messages(mainchat, end, offset_id = start):
-                msg.forward_to(anychat)
+                if type(msg) != types.MessageService:
+                    msg.forward_to(anychat)
         except ValueError:
             print(f'{Color.RED}- chat not found !{Color.RESET}')
         except errors.rpcerrorlist.ChatForwardsRestrictedError:
@@ -75,10 +77,11 @@ class MyBot:
         print(Color.DARK_GRAY,'\n\n----    wait!    ----\n',Color.RESET)
         try:
             for msg in self.cli.iter_messages(mainchat, end, offset_id = start):
-                if msg.media and type(msg.media) != types.MessageMediaWebPage:
-                    self.cli.send_file(anychat,msg.media,caption=msg.raw_text)
-                else:
-                    self.cli.send_message(anychat,msg.raw_text)
+                if type(msg) != types.MessageService:
+                    if msg.media and type(msg.media) != types.MessageMediaWebPage:
+                        self.cli.send_file(anychat,msg.media,caption=msg.raw_text)
+                    else:
+                        self.cli.send_message(anychat,msg.raw_text)
         except ValueError as er:
             print(f'{Color.RED}- Value Error !{Color.RESET}\n- {er}')
         except errors.rpcerrorlist.ChatForwardsRestrictedError:
